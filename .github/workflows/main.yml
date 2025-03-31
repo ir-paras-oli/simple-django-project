@@ -24,7 +24,7 @@ jobs:
           data: '{"api_key": "${{secrets.VB_API_KEY}}"}'
       - name: Parse Response
         id: parseResponse
-        run: echo "scan_id=${{fromJSON(steps.createScan.outputs.response).data.scan_id}}" >> "$GITHUB_OUTPUT"
+        run: echo "scan_id=$(jq -r '.data.scan_id' <<< '${{ steps.createScan.outputs.response }}')" >> "$GITHUB_OUTPUT"
 
   create_scan_in_IR_Portal_Repo2:
     runs-on: ubuntu-latest
@@ -40,7 +40,7 @@ jobs:
           data: '{"api_key": "${{secrets.VB_API_KEY_P}}"}'
       - name: Parse Response
         id: parseResponse
-        run: echo "scan_id=${{fromJSON(steps.createScan.outputs.response).data.scan_id}}" >> "$GITHUB_OUTPUT"
+        run: echo "scan_id=$(jq -r '.data.scan_id' <<< '${{ steps.createScan.outputs.response }}')" >> "$GITHUB_OUTPUT"
 
   start_proxy_and_build:
     runs-on: ubuntu-latest
@@ -67,7 +67,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt-get update
-          apt-get install -y curl python3-pip
+          apt-get install -y curl python3-pip jq
           pip install --ignore-installed -r requirements.txt || true
       
       - name: Checkout Code (Dynamic Repo)
@@ -78,11 +78,11 @@ jobs:
           
       - name: Set SCAN_ID for Repo 1
         if: matrix.repo == 'Repo1'
-        run: echo "SCAN_ID=${{ needs.create_scan_in_IR_Portal.outputs.scan_id }}" >> "$GITHUB_ENV"
+        run: echo "SCAN_ID=${{ needs.create_scan_in_IR_Portal.outputs.scan_id }}" >> $GITHUB_ENV
 
       - name: Set SCAN_ID for Repo 2
         if: matrix.repo == 'Repo2'
-        run: echo "SCAN_ID=${{ needs.create_scan_in_IR_Portal_Repo2.outputs.scan_id }}" >> "$GITHUB_ENV"
+        run: echo "SCAN_ID=${{ needs.create_scan_in_IR_Portal_Repo2.outputs.scan_id }}" >> $GITHUB_ENV
 
       - name: Run security scan
         uses: invisirisk/pse-action@v1.0.8
@@ -92,4 +92,3 @@ jobs:
 
       - name: Final Confirmation
         run: echo "Both repos ran successfully with respective API keys!"
-
