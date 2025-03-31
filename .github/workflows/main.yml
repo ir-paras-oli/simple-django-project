@@ -21,7 +21,7 @@ jobs:
         with:
           url: '${{env.API_URL}}/utilityapi/v1/scan'
           method: 'POST'
-          data: '{"api_key": "${{secrets.VB_API_KEY}}"}'
+          data: '{"api_key": "${{secrets.VB_API_KEY_P}}"}'
       - name: Parse Response
         id: parseResponse
         run: echo "scan_id=${{fromJSON(steps.createScan.outputs.response).data.scan_id}}" >> "$GITHUB_OUTPUT"
