@@ -19,12 +19,12 @@ jobs:
         id: createScan
         uses: fjogeleit/http-request-action@v1.15.1
         with:
-          url: '${{env.API_URL}}/utilityapi/v1/scan'
+          url: '${{ env.API_URL }}/utilityapi/v1/scan'
           method: 'POST'
-          data: '{"api_key": "${{secrets.VB_API_KEY}}"}'
+          data: '{"api_key": "${{ secrets.VB_API_KEY }}"}'
       - name: Parse Response
         id: parseResponse
-        run: echo "scan_id=$(jq -r '.data.scan_id' <<< '${{ steps.createScan.outputs.response }}')" >> "$GITHUB_OUTPUT"
+        run: echo "scan_id=$(echo '${{ steps.createScan.outputs.response }}' | jq -r '.data.scan_id')" >> "$GITHUB_OUTPUT"
 
   create_scan_in_IR_Portal_Repo2:
     runs-on: ubuntu-latest
@@ -35,12 +35,12 @@ jobs:
         id: createScan
         uses: fjogeleit/http-request-action@v1.15.1
         with:
-          url: '${{env.API_URL}}/utilityapi/v1/scan'
+          url: '${{ env.API_URL }}/utilityapi/v1/scan'
           method: 'POST'
-          data: '{"api_key": "${{secrets.VB_API_KEY_P}}"}'
+          data: '{"api_key": "${{ secrets.VB_API_KEY_P }}"}'
       - name: Parse Response
         id: parseResponse
-        run: echo "scan_id=$(jq -r '.data.scan_id' <<< '${{ steps.createScan.outputs.response }}')" >> "$GITHUB_OUTPUT"
+        run: echo "scan_id=$(echo '${{ steps.createScan.outputs.response }}' | jq -r '.data.scan_id')" >> "$GITHUB_OUTPUT"
 
   start_proxy_and_build:
     runs-on: ubuntu-latest
@@ -69,7 +69,7 @@ jobs:
           apt-get update
           apt-get install -y curl python3-pip jq
           pip install --ignore-installed -r requirements.txt || true
-      
+
       - name: Checkout Code (Dynamic Repo)
         uses: actions/checkout@v3
         with:
