@@ -13,9 +13,9 @@ Flask-Mail==0.9.1
 PyMongo==3.11.4
 python-memcached==1.59
 twilio==6.7.1
-boto3==1.24.16  # Latest stable version
+boto3==1.24.16
 botocore==1.27.16
-s3transfer==0.5.0
+s3transfer==0.6.0  # updated to match boto3 requirement
 sqlparse==0.4.2
 sqlalchemy-migrate==0.11.0
 flask-restful==0.3.9
