@@ -22,7 +22,7 @@ flask-restful==0.3.9
 django-crispy-forms==1.13.0
 django-cors-headers==3.8.0
 django-debug-toolbar==3.2
-celery-progress==1.0.0
+celery-progress==0.5
 pytest-django==4.4.0
 bcrypt==3.2.0
 pika==1.2.0
