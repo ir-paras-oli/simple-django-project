@@ -1,4 +1,5 @@
 celery==5.5.1
+celery-progress==0.5           # Changed from 1.0.0 to 0.5 (latest available)
 beautifulsoup4==4.11.1
 pillow==8.4.0
 pycryptodome==3.10.1
@@ -13,19 +14,21 @@ Flask-Mail==0.9.1
 PyMongo==3.11.4
 python-memcached==1.59
 twilio==6.7.1
-boto3==1.24.16  # Latest stable version
-botocore==1.27.16
-s3transfer==0.5.0
+boto3==1.24.16                 # Changed from 1.18.67 (not available) to latest stable compatible
+botocore==1.27.16              # Compatible with boto3==1.24.16
+s3transfer==0.5.0              # Required by boto3
 sqlparse==0.4.2
 sqlalchemy-migrate==0.11.0
 flask-restful==0.3.9
 django-crispy-forms==1.13.0
 django-cors-headers==3.8.0
 django-debug-toolbar==3.2
-celery-progress==0.5
 pytest-django==4.4.0
 bcrypt==3.2.0
 pika==1.2.0
 pyyaml==5.4.1
 pytest-flask==0.18.0
 python-dotenv==0.19.2
+cython>=0.29.36                # ADDED to avoid `cython_sources` error
+setuptools>=65.5.0             # ADDED for compatibility with modern packaging
+wheel>=0.38.4                  # ADDED to help with wheel builds
